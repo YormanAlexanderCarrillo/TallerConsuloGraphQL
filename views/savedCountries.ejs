@@ -25,13 +25,13 @@
                     <form method="POST" action="/deleteCountry">
                         <input type="hidden" name="_id" value="<%= item._id %>">
                         <button type="submit" class="btn btn-danger">Delete</button>
-                      </form>
+                    </form>
                   </div>
                 </div>
               <% }) %>
             <% } else { %>
               <div class="col-md-12">
-                <h3>Error</h3>
+                <h3>No hay paises guardados</h3>
               </div>
             <% } %>
           </div>

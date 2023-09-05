@@ -5,7 +5,7 @@ const Url = 'http://localhost:4005/';
 async function getCountries() {
     try {
         const response = await axios.post(Url, {
-            query: "{obtainAll{nameCommon,nameOfficial, flags, alt}}"
+            query: "{obtainAll{nameCommon,nameOfficial,independent,capital,region,coatOfArms, flags, alt}}"
         },
             {
                 headers: {
@@ -58,10 +58,9 @@ async function saveCountry(country) {
                 },
             }
         );
-        console.log(response.data);
+       // console.log(response.data);
         //console.log(country);
     } catch (error) {
-
         console.error(error);
     }
 }
@@ -81,18 +80,32 @@ async function getCountriesDb() {
         //console.log(response.data.data)
         return response.data.data.obtainAllDb
     } catch (error) {
-        // console.log(error);
+         console.log(error);
     }
 }
 
 async function deleteCountryDb(_id) {
     try {
-        const response = await axios.post(Url,{
-            
-        })
-        return null
+        const response = await axios.post(Url, {
+            query: `
+            mutation($deleteCountryId: String!){
+                deleteCountry(id: $deleteCountryId) {
+                  nameCommon
+                }
+              }
+            `, variables: {
+                "deleteCountryId": _id
+            }
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+        }
+        )
+        return response
     } catch (error) {
-
+        console.log(error)
     }
 }
 
@@ -101,4 +114,4 @@ async function deleteCountryDb(_id) {
 module.exports.getCountries = getCountries
 module.exports.saveCountry = saveCountry
 module.exports.getCountriesDb = getCountriesDb
-module.exports.deleteCountryDb = this.deleteCountryDb
+module.exports.deleteCountryDb = deleteCountryDb

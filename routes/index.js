@@ -23,14 +23,14 @@ routes.post('/saved', async (req, res) => {
         const country = {
             nameCommon: req.body.nameCommon,
             nameOfficial: req.body.nameOfficial,
-            independent: false,
-            capital:"String",
-            region: "String",
-            coatOfArms: "String",
+            independent: JSON.parse(req.body.independent),
+            capital: req.body.capital,
+            region: req.body.region,
+            coatOfArms: req.body.coatOfArms,
             flags: req.body.flags,
             alt: req.body.alt
         }
-        //console.log(country)
+        console.log(country)
         saveCountry(country)
         res.redirect('/')
     } catch {
@@ -43,7 +43,7 @@ routes.post('/saved', async (req, res) => {
 routes.get('/savedCountries',async (req, res)=>{
     try {
         const data = await getCountriesDb()
-        console.log(data);
+     //   console.log(data);
         res.render('savedCountries.ejs', {
             title: 'save Country',
             data: data
@@ -55,11 +55,11 @@ routes.get('/savedCountries',async (req, res)=>{
     }
 })
 
-routes.get('/deleteCountry',async (req, res)=>{
+routes.post('/deleteCountry',async (req, res)=>{
     try {
         const _id = req.body._id
         const data = await deleteCountryDb(_id)
-        console.log(data);
+        console.log(data.data);
         res.redirect('/savedCountries')
     } catch {
         res.render('index.ejs', {
