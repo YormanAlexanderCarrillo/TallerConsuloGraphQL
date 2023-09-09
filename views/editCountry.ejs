@@ -1,0 +1,97 @@
+<%- include('./templates/header')%>
+
+    <body>
+
+        <div class="container text-center">
+            <h2 class="bg-warning p-4">COUNTRY EDIT FORM</h2>
+
+        </div>
+        <br>
+        <div class="container">
+            <% if (data){%>
+                <form class="row g-3" method="POST" action="/modifyCountry">
+                    <div class="col-md-6 ">
+                        <label for="inputNameCommon" class="form-label">Name Common</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputNameCommon" name="inputNameCommon" value="<%= data.nameCommon %>" required disabled>
+                            <button type="button" class="btn btn-danger" onclick="toggleInput('inputNameCommon')">Edit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputNameOfficial" class="form-label">Name Official</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputNameOfficial" name="inputNameOfficial"
+                                value="<%= data.nameOfficial%>" required disabled>
+                            <button type="button" class="btn btn-danger"
+                                onclick="toggleInput('inputNameOfficial')">Edit</button>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="inputCapital" class="form-label">Capital</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputCapital" name="inputCapital" value="<%= data.capital%>"
+                                required disabled>
+                            <button type="button" class="btn btn-danger"
+                                onclick="toggleInput('inputCapital')">Edit</button>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label for="inputRegion" class="form-label">Region</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputRegion" name="inputRegion" value="<%= data.region%>" required
+                                disabled>
+                            <button type="button" class="btn btn-danger"
+                                onclick="toggleInput('inputRegion')">Edit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputIndependent" class="form-label">Independent</label>
+                        <select class="form-select" id="inputIndependent" name="inputIndependent" aria-label="Default select example">
+                            <option value="true" <%=data.independent ? 'selected' : '' %>>True</option>
+                            <option value="false" <%=!data.independent ? 'selected' : '' %>>False</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputCoatOfArms" class="form-label">Coat Of Arms</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputCoatOfArms" name="inputCoatOfArms" value="<%= data.coatOfArms %>"
+                                required disabled>
+                            <button type="button" class="btn btn-danger"
+                                onclick="toggleInput('inputCoatOfArms')">Edit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputFlags" class="form-label">Url Flag</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputFlags" name="inputFlags" value="<%= data.flags %>" required
+                                disabled>
+                            <button type="button" class="btn btn-danger"
+                                onclick="toggleInput('inputFlags')">Edit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="inputDescription" class="form-label">Description Flag</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="inputDescription" name="inputDescription" value="<%= data.alt %>"
+                                required disabled>
+                            <button type="button" class="btn btn-danger"
+                                onclick="toggleInput('inputDescription')">Edit</button>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <input type="hidden" name="id" value="<%= data._id %>"> 
+                        <button type="submit" class="btn btn-primary" onclick="enableAllInputs()">Make Change</button>
+                    </div>
+                </form>
+                <%} else{%>
+                    <h3>Ocurrio Un error</h3>
+                <%}%>
+        </div>
+    </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+
+    </html>

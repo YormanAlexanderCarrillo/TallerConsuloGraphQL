@@ -1,12 +1,12 @@
 const express = require('express')
 const routes = express.Router()
-const { getCountries, saveCountry, getCountriesDb , deleteCountryDb} = require('../resource/country')
+const { getCountries, saveCountry, getCountriesDb, deleteCountryDb, findByIdDb, modifyCountry } = require('../resource/country')
 
 routes.get('/', async (req, res) => {
 
     try {
         const data = await getCountries()
-       // console.log(data);
+        // console.log(data);
         res.render('index.ejs', {
             title: 'Inicio',
             data: data
@@ -30,7 +30,7 @@ routes.post('/saved', async (req, res) => {
             flags: req.body.flags,
             alt: req.body.alt
         }
-        console.log(country)
+       // console.log(country)
         saveCountry(country)
         res.redirect('/')
     } catch {
@@ -40,10 +40,10 @@ routes.post('/saved', async (req, res) => {
     }
 })
 
-routes.get('/savedCountries',async (req, res)=>{
+routes.get('/savedCountries', async (req, res) => {
     try {
         const data = await getCountriesDb()
-     //   console.log(data);
+        //   console.log(data);
         res.render('savedCountries.ejs', {
             title: 'save Country',
             data: data
@@ -55,11 +55,11 @@ routes.get('/savedCountries',async (req, res)=>{
     }
 })
 
-routes.post('/deleteCountry',async (req, res)=>{
+routes.post('/deleteCountry', async (req, res) => {
     try {
         const _id = req.body._id
         const data = await deleteCountryDb(_id)
-        console.log(data.data);
+        // console.log(data.data);
         res.redirect('/savedCountries')
     } catch {
         res.render('index.ejs', {
@@ -67,7 +67,33 @@ routes.post('/deleteCountry',async (req, res)=>{
         })
     }
 })
+routes.post('/modCountry', async (req, res) => {
+    try {
+        const _id = req.body.id
+        //console.log(_id)
+        const data = await findByIdDb(_id)
+        //console.log(data)
+        res.render('editCountry.ejs', {
+            title: "Edit Country",
+            data: data.findByIdDb
+        })
+    } catch (error) {
+        console.log(error);
+    }
+})
 
+routes.post('/modifyCountry', async (req, res) => {
+    try {
+        const countryData = req.body
+        //console.log(countryData);
+        const response = await modifyCountry(countryData)
+       // console.log(response);
+        res.redirect('/savedCountries')
+    } catch (error) {
+        console.log(error);
+    }
+    
+})
 
 
 module.exports = routes
