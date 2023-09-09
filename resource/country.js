@@ -58,7 +58,7 @@ async function saveCountry(country) {
                 },
             }
         );
-       // console.log(response.data);
+        // console.log(response.data);
         //console.log(country);
     } catch (error) {
         console.error(error);
@@ -68,7 +68,7 @@ async function saveCountry(country) {
 async function getCountriesDb() {
     try {
         const response = await axios.post(Url, {
-            query: "{obtainAllDb{_id nameCommon,nameOfficial, flags, alt}}"
+            query: "{obtainAllDb{_id nameCommon,nameOfficial, flags, alt, coatOfArms}}"
         },
             {
                 headers: {
@@ -80,7 +80,7 @@ async function getCountriesDb() {
         //console.log(response.data.data)
         return response.data.data.obtainAllDb
     } catch (error) {
-         console.log(error);
+        console.log(error);
     }
 }
 
@@ -90,9 +90,9 @@ async function deleteCountryDb(_id) {
             query: `
             mutation($deleteCountryId: String!){
                 deleteCountry(id: $deleteCountryId) {
-                  nameCommon
+                nameCommon
                 }
-              }
+            }
             `, variables: {
                 "deleteCountryId": _id
             }

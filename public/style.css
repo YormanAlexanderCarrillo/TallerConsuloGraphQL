@@ -1,0 +1,106 @@
+.card-img-top {
+    max-height: 150px;
+    object-fit: cover;
+    height: 200px;
+}
+
+.card {
+    margin-bottom: 20px;
+}
+
+.card-rotate {
+    perspective: 1000px;
+    transition: transform 0.5s;
+    margin: 20px;
+    display: inline-block;
+    width: 280px;
+}
+
+.card-rotate:hover .card {
+    transform: rotateY(180deg);
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    display: none;
+}
+
+.card-rotate:hover .card-front h5 {
+    display: none;
+}
+
+.card-rotate:hover .card-back {
+    display: block;
+}
+
+/* Estilo para el texto recortado */
+.truncated-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Cambia este valor según la cantidad de líneas que desees mostrar inicialmente */
+    -webkit-box-orient: vertical;
+}
+
+/* Estilo para el botón "Ver más" y "Ver menos" */
+.read-more,
+.read-less {
+    cursor: pointer;
+    color: blue;
+}
+
+/* Agrega esto a tu archivo style.css */
+.custom-card {
+    height: 400px;
+    /* Ajusta la altura según tus preferencias */
+}
+
+
+.nav-item.active {
+    background-color: #007bff;
+    /* Cambia el color de fondo del enlace activo */
+    color: #fff;
+    /* Cambia el color del texto del enlace activo */
+    border-radius: 20px;
+    /* Agrega bordes redondos al enlace activo */
+    padding: 2px 10px;
+    /* Ajusta el espaciado interior del enlace activo según tus preferencias */
+}
+
+.Nav {
+    background-color: #FF5733;
+    color: black;
+    font-weight: 700;
+}
+
+.fixed-top {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* Agregar sombra si lo deseas */
+    z-index: 1000;
+    /* Ajustar el índice z para asegurarse de que esté encima de otros elementos */
+}
+
+body {
+    margin-top: 70px;
+    /* Ajusta la altura según la altura de tu barra de navegación */
+}

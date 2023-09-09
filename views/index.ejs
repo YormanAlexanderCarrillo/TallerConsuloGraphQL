@@ -5,35 +5,38 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>
-    <%=title%>
+    <%= title %>
   </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-  <style>
-    .card {
-      margin-bottom: 20px; /* Espaciado uniforme entre las tarjetas */
-    }
-    .card-img-top {
-      max-height: 150px; /* Altura máxima de la imagen para mantener uniformidad */
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="container">
-    <%- include('./templates/navBar') %>
+    <%- include('./templates/navBar', { isIndex: true, isSaved: false }) %>
   </div>
 
   <div class="container">
-    <div class="row justify-content-center align-items-end">
+    <div class="row">
       <% if (data.length > 0) { %>
         <% data.forEach((item) => { %>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="<%= item.flags%>" class="card-img-top img-fluid" alt="Country Flag">
+          <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card-rotate border mb-4">
+              <div class="card">
+                <img src="<%= item.flags %>" class="card-img-top img-fluid" alt="Country Flag">
+                <div class="card-back">
+                  <img src="<%= item.coatOfArms %>" class="card-img-top img-fluid" alt="Coat of Arms">
+                </div>
+              </div>
               <div class="card-body">
-                <h5 class="card-title"><%= item.nameCommon %></h5>
-                <p class="card-text"><%= item.alt %></p>
+                <h5 class="card-title">
+                  <%= item.nameCommon %>
+                </h5>
+                <p class="card-text truncated-text">
+                  <%= item.alt %>
+                </p>
+                
                 <form method="POST" action="/saved">
                   <input type="hidden" name="nameCommon" value="<%= item.nameCommon %>">
                   <input type="hidden" name="nameOfficial" value="<%= item.nameOfficial %>">
@@ -51,14 +54,16 @@
         <% }) %>
       <% } else { %>
         <div class="col-md-12">
-          <h3>No hay datos </h3>
+          <h3>No hay datos</h3>
         </div>
       <% } %>
     </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
