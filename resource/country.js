@@ -1,13 +1,12 @@
 const axios = require('axios');
 
-//const Url = 'http://localhost:4005/';
-const Url = 'https://graphqlbackend.fly.dev/'
+const Url = 'http://localhost:4005/';
+//const Url = 'https://graphqlbackend.fly.dev/'
 
 async function getCountries() {
     try {
         const response = await axios.post(Url, {
-            query: "{obtainAll{nameCommon,nameOfficial,independent,capital,region,coatOfArms, flags, alt}}"
-            //  query: "{obtainAll{nameCommon,nameOfficial,coatOfArms, flags, alt}}"
+            query: "{obtainAllCountryApi{nameCommon,nameOfficial,independent,capital,region,coatOfArms, flags, alt}}"
         },
             {
                 headers: {
@@ -17,9 +16,9 @@ async function getCountries() {
             });
 
         //console.log(response.data.data)
-        return response.data.data.obtainAll
+        return response.data.data.obtainAllCountryApi
     } catch (error) {
-        // console.log(error);
+        console.log(error);
     }
 }
 
@@ -30,15 +29,8 @@ async function saveCountry(country) {
             {
                 query: `
                 mutation($nameCommon: String!, $nameOfficial: String!, $independent: Boolean!, $capital: String!, $region: String!, $coatOfArms: String!, $flags: String!, $alt: String!){
-                    addCountry(nameCommon: $nameCommon, nameOfficial: $nameOfficial, independent: $independent, capital: $capital, region: $region, coatOfArms: $coatOfArms, flags: $flags, alt: $alt) {
-                        nameCommon
-                        nameOfficial
-                        independent
-                        capital
-                        region
-                        coatOfArms
-                        flags
-                        alt
+                    addCountryDb(nameCommon: $nameCommon, nameOfficial: $nameOfficial, independent: $independent, capital: $capital, region: $region, coatOfArms: $coatOfArms, flags: $flags, alt: $alt) {
+                        nameCommon    
                     }
                 }
                     `,
@@ -60,17 +52,17 @@ async function saveCountry(country) {
                 },
             }
         );
-        // console.log(response.data);
-        //console.log(country);
+        //console.log(response.data.data.addCountryDb)
+        return response.data.data.addCountryDb
     } catch (error) {
-        console.error(error);
+        console.error(error)
     }
 }
 
 async function getCountriesDb() {
     try {
         const response = await axios.post(Url, {
-            query: "{obtainAllDb{_id nameCommon,nameOfficial, flags, alt, coatOfArms}}"
+            query: "{obtainAllCountryDb{_id nameCommon,nameOfficial, flags, alt, coatOfArms}}"
         },
             {
                 headers: {
@@ -80,7 +72,7 @@ async function getCountriesDb() {
             });
 
         //console.log(response.data.data)
-        return response.data.data.obtainAllDb
+        return response.data.data.obtainAllCountryDb
     } catch (error) {
         console.log(error);
     }
@@ -91,7 +83,7 @@ async function deleteCountryDb(_id) {
         const response = await axios.post(Url, {
             query: `
             mutation($deleteCountryId: String!){
-                deleteCountry(id: $deleteCountryId) {
+                deleteCountryDb(id: $deleteCountryId) {
                 nameCommon
                 }
             }
@@ -105,7 +97,8 @@ async function deleteCountryDb(_id) {
             },
         }
         )
-        return response
+       // console.log(response.data.data.deleteCountryDb);
+        return response.data.data.deleteCountryDb
     } catch (error) {
         console.log(error)
     }
@@ -151,7 +144,7 @@ async function modifyCountry(country) {
         const response = await axios.post(Url, {
             query: `
             mutation($modifyCountryId: String!, $nameCommon: String!, $nameOfficial: String!, $independent: Boolean!, $capital: String!, $region: String!, $coatOfArms: String!, $flags: String!, $alt: String!) {
-                modifyCountry(id: $modifyCountryId, nameCommon: $nameCommon, nameOfficial: $nameOfficial, independent: $independent, capital: $capital, region: $region, coatOfArms: $coatOfArms, flags: $flags, alt: $alt) {
+                modifyCountryDb(id: $modifyCountryId, nameCommon: $nameCommon, nameOfficial: $nameOfficial, independent: $independent, capital: $capital, region: $region, coatOfArms: $coatOfArms, flags: $flags, alt: $alt) {
                     nameCommon
                 }
             }
@@ -180,7 +173,6 @@ async function modifyCountry(country) {
     }
 
 }
-
 
 module.exports.getCountries = getCountries
 module.exports.saveCountry = saveCountry
